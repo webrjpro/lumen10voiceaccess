@@ -1,7 +1,7 @@
 # Installation and customer-owned AI credentials
 
 Component: `local_lumen10_voiceaccess`.
-Release: **0.5.1-beta / 2026110300**. Supported Moodle branches: **5.1 and 5.2**.
+Release: **0.5.2-beta / 2026110301**. Supported Moodle branches: **5.1 and 5.2**.
 
 This is the main VoiceAccess plugin. The optional `mod_lumen10voiceaccess` activity
 provides an entry point in a course; it cannot provide the assistant on its own.
@@ -80,12 +80,23 @@ This beta does not guarantee universal accessibility, browser support or exam fr
 prevention. Test real devices and intended users before wider deployment. The optional
 Windows helper is not required to install the plugin and is not run by the installer.
 
-## Distribution release
+## Distribution release and upgrade
 
-0.5.1-beta updates customer-installation documentation, external-processing disclosure
-and Moodle 5.1/5.2 metadata. PHP/JavaScript runtime logic is the same as the 0.5.0-beta
-production baseline inspected on 3 November 2026. It does not transfer the author's
-production settings or claim new end-to-end provider certification. Package hashes
-and a detached technical release signature accompany the installers separately.
+0.5.2-beta fixes the moodle-plugin-ci table-prefix validation failure. All five tables
+now use the full local_lumen10_voiceaccess prefix, including runtime queries, privacy
+operations and cleanup tasks. Native Moodle upgrade renames legacy local_l10va tables,
+preserving record IDs, encrypted personal keys, approvals, paired devices and usage.
+The institution's Gemini server secret is not moved or copied.
+
+The migration checks every table pair before renaming. If both old and new versions
+of the same table exist, it stops rather than merge or discard records. A partially
+completed rename can be retried. Use Moodle's normal upgrade process; do not uninstall
+an existing plugin to apply this correction. Take the institution's normal database
+and Moodledata backup before an upgrade. No production upgrade was performed while
+preparing this package.
+
+This revision remains beta. Package hashes and a detached technical release signature
+accompany the installers separately. See packages/qa-results.json in the distribution
+repository for the checks actually executed.
 
 Copyright 2026 Carlos Antonio de Oliveira Piquet. GNU GPL v3 or later.

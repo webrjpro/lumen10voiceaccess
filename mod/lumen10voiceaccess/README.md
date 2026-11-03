@@ -1,7 +1,7 @@
 # Lumen10 Acesso Universal - optional course activity
 
 Component: `mod_lumen10voiceaccess`.
-Release: **0.2.1-beta / 2026110300**. Supported Moodle branches: **5.1 and 5.2**.
+Release: **0.2.2-beta / 2026110301**. Supported Moodle branches: **5.1 and 5.2**.
 
 This activity provides course instructions and a link to site-wide VoiceAccess
 preferences. The assistant and AI integrations belong to the required companion
@@ -9,8 +9,8 @@ plugin `local_lumen10_voiceaccess`; this activity cannot provide them on its own
 
 ## Installation
 
-1. Install `local_lumen10_voiceaccess` version **2026101802 or later** first.
-   The companion package supplied with this release is **0.5.1-beta / 2026110300**.
+1. Install `local_lumen10_voiceaccess` version **2026110301 or later** first.
+   The companion package supplied with this release is **0.5.2-beta / 2026110301**.
 2. Install this activity ZIP using Moodle's native plugin installer.
 3. A teacher can add **Lumen10 Acesso Universal** to a course.
 4. A site administrator configures the companion plugin and authorizes participants.
@@ -46,9 +46,9 @@ handling is documented by the companion plugin.
 
 ## Release notes
 
-0.2.1-beta updates installation and external-service documentation, corrects the
-companion dependency requirement and declares Moodle 5.1/5.2 support. Activity runtime
-logic is unchanged from 0.2.0-beta. It remains a beta release, without a claim of
+0.2.2-beta updates installation and external-service documentation, corrects the
+companion dependency requirement and declares Moodle 5.1/5.2 support. The companion dependency and lifecycle tests now use the canonical database schema.
+Adds the required course activity index and updates lifecycle tests for Moodle 5.2. It remains a beta release, without a claim of
 universal browser support or full accessibility compliance.
 
 Copyright 2026 Carlos Antonio de Oliveira Piquet. GNU GPL v3 or later; see `LICENSE`.

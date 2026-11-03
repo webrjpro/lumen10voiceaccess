@@ -74,8 +74,8 @@ final class access_test extends \advanced_testcase {
         $pair = $this->pair($user->id);
         $this->assertTrue(access::public_allowed());
         $this->assertEquals($before, $USER->id);
-        $this->assertFalse($DB->record_exists('local_l10va_device', ['tokenhash' => $pair]));
-        $this->assertFalse($DB->record_exists('local_l10va_device', ['tokenhash' => $_COOKIE[access::cookie_name()]]));
+        $this->assertFalse($DB->record_exists('local_lumen10_voiceaccess_device', ['tokenhash' => $pair]));
+        $this->assertFalse($DB->record_exists('local_lumen10_voiceaccess_device', ['tokenhash' => $_COOKIE[access::cookie_name()]]));
         $this->expectException(\moodle_exception::class);
         access::claim_pair($pair);
     }
@@ -83,7 +83,7 @@ final class access_test extends \advanced_testcase {
         global $DB;
         $user = $this->user();
         $this->pair($user->id);
-        $DB->set_field('local_l10va_device', 'expires', time() - 1, ['userid' => $user->id]);
+        $DB->set_field('local_lumen10_voiceaccess_device', 'expires', time() - 1, ['userid' => $user->id]);
         $this->assertFalse(access::public_allowed());
         $_COOKIE[access::cookie_name()] = str_repeat('0', 64);
         $this->assertFalse(access::public_allowed());
@@ -163,7 +163,7 @@ final class access_test extends \advanced_testcase {
         access::revoke($user->id);
         set_config('allowai', 1, preferences::COMPONENT);
         $this->assertSame(['intent' => 'UNKNOWN'], ai\router::interpret($user->id, 'show my grades'));
-        $this->assertEquals(0, $DB->get_field('local_l10va_user', 'quotaused', ['userid' => $user->id]));
+        $this->assertEquals(0, $DB->get_field('local_lumen10_voiceaccess_user', 'quotaused', ['userid' => $user->id]));
     }
     public function test_duplicate_email_never_grants_an_ambiguous_captcha_exception(): void {
         global $CFG;
@@ -184,8 +184,8 @@ final class access_test extends \advanced_testcase {
         $this->pair($user->id);
         $this->pair($other->id);
         privacy\provider::delete_data_for_all_users_in_context(\context_user::instance($user->id));
-        $this->assertFalse($DB->record_exists('local_l10va_access', ['userid' => $user->id]));
-        $this->assertFalse($DB->record_exists('local_l10va_device', ['userid' => $user->id]));
+        $this->assertFalse($DB->record_exists('local_lumen10_voiceaccess_access', ['userid' => $user->id]));
+        $this->assertFalse($DB->record_exists('local_lumen10_voiceaccess_device', ['userid' => $user->id]));
         $this->assertTrue(access::allowed($other->id));
     }
     public function test_email_matching_another_username_keeps_the_native_captcha(): void {
@@ -224,7 +224,7 @@ final class access_test extends \advanced_testcase {
         } catch (\moodle_exception $e) {
             $this->assertSame('notapproved', $e->errorcode);
         }
-        $this->assertFalse($DB->record_exists('local_l10va_user', ['userid' => $user->id]));
+        $this->assertFalse($DB->record_exists('local_lumen10_voiceaccess_user', ['userid' => $user->id]));
     }
     public function test_delete_authorization_removes_access_and_links_but_preserves_account_and_preferences(): void {
         global $DB;
@@ -241,8 +241,8 @@ final class access_test extends \advanced_testcase {
         access::issue_pair($other->id);
         $sink = $this->redirectEvents();
         $this->assertTrue(access::delete_authorization($user->id));
-        $this->assertFalse($DB->record_exists('local_l10va_access', ['userid' => $user->id]));
-        $this->assertFalse($DB->record_exists('local_l10va_device', ['userid' => $user->id]));
+        $this->assertFalse($DB->record_exists('local_lumen10_voiceaccess_access', ['userid' => $user->id]));
+        $this->assertFalse($DB->record_exists('local_lumen10_voiceaccess_device', ['userid' => $user->id]));
         $this->assertFalse(access::allowed($user->id));
         $this->assertFalse(access::public_allowed());
         $this->assertFalse(access::has_voice_phrase($user->id));
@@ -250,7 +250,7 @@ final class access_test extends \advanced_testcase {
         $this->assertTrue($DB->record_exists('user', ['id' => $user->id, 'deleted' => 0]));
         $this->assertTrue(is_enrolled(\context_course::instance($course->id), $user->id));
         $this->assertTrue(access::allowed($other->id));
-        $this->assertTrue($DB->record_exists('local_l10va_device', ['userid' => $other->id]));
+        $this->assertTrue($DB->record_exists('local_lumen10_voiceaccess_device', ['userid' => $other->id]));
         $events = $sink->get_events();
         $this->assertCount(1, $events);
         $this->assertSame('deleteapproval', $events[0]->other['action']);
@@ -266,7 +266,7 @@ final class access_test extends \advanced_testcase {
         access::revoke($user->id);
         $this->assertTrue(access::delete_authorization($user->id));
         $this->assertFalse(access::delete_authorization($user->id));
-        $this->assertFalse($DB->record_exists('local_l10va_access', ['userid' => $user->id]));
+        $this->assertFalse($DB->record_exists('local_lumen10_voiceaccess_access', ['userid' => $user->id]));
         $this->assertTrue($DB->record_exists('user', ['id' => $user->id]));
     }
 
@@ -278,7 +278,7 @@ final class access_test extends \advanced_testcase {
             access::delete_authorization($user->id);
             $this->fail('An ordinary account deleted an approval');
         } catch (\required_capability_exception $e) {
-            $this->assertTrue($DB->record_exists('local_l10va_access', ['userid' => $user->id]));
+            $this->assertTrue($DB->record_exists('local_lumen10_voiceaccess_access', ['userid' => $user->id]));
         }
     }
 
@@ -286,9 +286,9 @@ final class access_test extends \advanced_testcase {
         global $DB;
         $user = $this->user();
         $this->pair($user->id);
-        $this->assertEquals(2, $DB->count_records('local_l10va_device', ['userid' => $user->id]));
+        $this->assertEquals(2, $DB->count_records('local_lumen10_voiceaccess_device', ['userid' => $user->id]));
         (new task\purge_devices())->execute();
-        $this->assertEquals(1, $DB->count_records('local_l10va_device', ['userid' => $user->id]));
+        $this->assertEquals(1, $DB->count_records('local_lumen10_voiceaccess_device', ['userid' => $user->id]));
         $this->assertTrue(access::public_allowed());
     }
 }

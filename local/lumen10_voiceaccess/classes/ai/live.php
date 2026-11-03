@@ -122,9 +122,9 @@ final class live {
                 $row->lastrequest = time();
                 $row->timemodified = time();
                 if (empty($row->id)) {
-                    $row->id = $DB->insert_record('local_l10va_user', $row);
+                    $row->id = $DB->insert_record('local_lumen10_voiceaccess_user', $row);
                 } else {
-                    $DB->update_record('local_l10va_user', (object)['id' => $row->id,
+                    $DB->update_record('local_lumen10_voiceaccess_user', (object)['id' => $row->id,
                         'quotaused' => $row->quotaused, 'quotaday' => $day, 'lastrequest' => time()]);
                 }
                 $usageid = gemini::record_usage($userid, gemini::live_model(), true, 0, 0);

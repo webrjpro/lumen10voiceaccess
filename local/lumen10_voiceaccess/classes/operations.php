@@ -6,7 +6,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /** Bounded operational ledger. No audio, transcripts, page contents, credentials or IP addresses. */
 final class operations {
-    public const TABLE = 'local_l10va_live';
+    public const TABLE = 'local_lumen10_voiceaccess_live';
     public const REASONS = ['stopped', 'navigation', 'hidden', 'local', 'expired', 'offline', 'limited',
         'unavailable', 'revoked', 'provider', 'abandoned'];
 

@@ -1,22 +1,44 @@
 {
-  "php_linted": 59,
-  "javascript_parsed": 26,
-  "syntax_failures": [],
-  "customer_key_checks": {
-    "passed": true,
-    "checks": [
-      "fresh installation has no Gemini key",
-      "fresh installation reports no key source",
-      "customer default private file is supported",
-      "file is reported as key source",
-      "private file key is masked",
-      "customer key file override works",
-      "customer private Moodle config works",
-      "customer environment takes precedence",
-      "multiline credential is rejected",
-      "removing synthetic keys restores unconfigured state"
-    ],
-    "real_provider_calls": 0
+  "moodle": "5.2.4+ (Build: 20261030)",
+  "php": "8.3.36",
+  "database": "MariaDB 11.4.13",
+  "platform": "Linux",
+  "moodle_plugin_ci": "4.5.11",
+  "local_validate_passed": true,
+  "local_phplint_files": 45,
+  "activity_validate_passed": true,
+  "activity_phplint_files": 16,
+  "reported_error_reproduced_on_original_zip": true,
+  "local_phpunit": {
+    "tests": 75,
+    "assertions": 375,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0
   },
-  "runtime_logic_changed": false
+  "activity_phpunit": {
+    "tests": 3,
+    "assertions": 17,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0
+  },
+  "migration_tests_included_in_local_suite": {
+    "tests": 3,
+    "assertions": 37,
+    "cases": [
+      "record IDs and encrypted key preserved",
+      "partially renamed tables resume safely",
+      "conflicting old/new tables abort before renaming"
+    ]
+  },
+  "fresh_database_installation_completed": true,
+  "external_provider_calls": 0,
+  "production_modified": false,
+  "limitations": [
+    "Native suites executed on Moodle 5.2; Moodle 5.1 support remains declared, not re-executed in this fix.",
+    "No new browser, load or real-provider acceptance test."
+  ],
+  "secret_scan_findings": [],
+  "production_gemini_key_absent": true
 }

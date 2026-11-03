@@ -79,9 +79,9 @@ final class router {
                 $row->quotaday = $day;
                 $row->lastrequest = time();
                 $row->timemodified = time();
-                $row->id = $DB->insert_record('local_l10va_user', $row);
+                $row->id = $DB->insert_record('local_lumen10_voiceaccess_user', $row);
             } else {
-                $DB->update_record('local_l10va_user', (object)[
+                $DB->update_record('local_lumen10_voiceaccess_user', (object)[
                     'id' => $row->id, 'quotaused' => $used + 1, 'quotaday' => $day, 'lastrequest' => time(),
                 ]);
             }

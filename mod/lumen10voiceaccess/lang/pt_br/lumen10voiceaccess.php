@@ -4,6 +4,7 @@ defined('MOODLE_INTERNAL') || die();
 $string['pluginname'] = 'Lumen10 Acesso Universal';
 $string['modulename'] = 'Lumen10 Acesso Universal';
 $string['modulenameplural'] = 'Lumen10 Acesso Universal';
+$string['noactivities'] = 'Não há atividades de Acesso Universal disponíveis neste curso.';
 $string['modulename_help'] = 'Ponto de entrada para voz, teclado e preferências pessoais. As credenciais são pessoais e nunca são incluídas no backup do curso.';
 $string['scope'] = 'O painel de voz acompanha a navegação no site. Esta atividade oferece orientação e acesso às preferências pessoais.';
 $string['lumen10voiceaccess:addinstance'] = 'Adicionar acesso universal';

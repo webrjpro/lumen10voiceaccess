@@ -8,17 +8,17 @@ o rastreador de problemas. O envio ao GitHub não altera a visibilidade do repos
 
 | Campo | Valor |
 | --- | --- |
-| ZIP | `local_lumen10_voiceaccess-0.5.1-beta.zip` |
+| ZIP | `local_lumen10_voiceaccess-0.5.2-beta.zip` |
 | Tipo | Local plugin / Plugin local |
 | Componente | `local_lumen10_voiceaccess` |
 | Nome | Lumen10 Acesso Universal |
-| Versão numérica | `2026110300` |
-| Lançamento | `0.5.1-beta` |
+| Versão numérica | `2026110301` |
+| Lançamento | `0.5.2-beta` |
 | Maturidade | Beta |
 | Moodle | 5.1 e 5.2 |
 | Repositório Git | `https://github.com/webrjpro/lumen10voiceaccess` |
 | Ramificação | `main` |
-| Tag | `v0.5.1-beta` |
+| Tag | `v0.5.2-beta` |
 | Problemas | `https://github.com/webrjpro/lumen10voiceaccess/issues` |
 | Documentação | `https://github.com/webrjpro/lumen10voiceaccess/blob/main/local/lumen10_voiceaccess/INSTALLATION.md` |
 
@@ -44,33 +44,33 @@ Descrição em inglês:
 
 Notas de lançamento:
 
-> Distribution revision based on the inspected 0.5.0-beta production runtime.
-> Adds customer-owned API key installation instructions, external-processing disclosure
-> and explicit Moodle 5.1/5.2 compatibility metadata. No real credentials are included.
-> Runtime logic is unchanged. Remains beta.
+> Fixes the moodle-plugin-ci table-prefix validation failure. All five database tables
+> and their PHP references now use the full component prefix. Native Moodle upgrade
+> renames existing tables while preserving IDs, preferences, encrypted personal keys,
+> approvals, devices and usage records. No real credentials are included. Remains beta.
 
 ## 2. Atividade opcional
 
 | Campo | Valor |
 | --- | --- |
-| ZIP | `mod_lumen10voiceaccess-0.2.1-beta.zip` |
+| ZIP | `mod_lumen10voiceaccess-0.2.2-beta.zip` |
 | Tipo | Activity module / Módulo de atividade |
 | Componente | `mod_lumen10voiceaccess` |
 | Nome | Lumen10 Acesso Universal - Course activity |
-| Versão numérica | `2026110300` |
-| Lançamento | `0.2.1-beta` |
+| Versão numérica | `2026110301` |
+| Lançamento | `0.2.2-beta` |
 | Maturidade | Beta |
 | Moodle | 5.1 e 5.2 |
 | Repositório Git | `https://github.com/webrjpro/lumen10voiceaccess` |
 | Ramificação | `main` |
-| Tag | `mod-v0.2.1-beta` |
+| Tag | `mod-v0.2.2-beta` |
 | Problemas | `https://github.com/webrjpro/lumen10voiceaccess/issues` |
-| Dependência | `local_lumen10_voiceaccess` versão `2026101802` ou superior |
+| Dependência | `local_lumen10_voiceaccess` versão `2026110301` ou superior |
 
 Descrição em inglês:
 
 > Optional course activity providing instructions and a link to the site-wide Lumen10
-> VoiceAccess preferences. Requires local_lumen10_voiceaccess version 2026101802 or later,
+> VoiceAccess preferences. Requires local_lumen10_voiceaccess version 2026110301 or later,
 > installed separately. The voice assistant and AI integrations are supplied by that
 > companion local plugin, not by this activity alone.
 >
@@ -81,9 +81,10 @@ Descrição em inglês:
 
 Notas de lançamento:
 
-> Updates installation and external-service documentation, corrects the companion
-> dependency requirement and declares Moodle 5.1/5.2 support. Activity runtime logic
-> is unchanged from 0.2.0-beta. No real credentials are included.
+> Updates the companion dependency and lifecycle tests for the corrected database
+> schema and adds the required course activity index. Lifecycle tests use the native
+> Moodle 5.2 actions API when available. Requires local_lumen10_voiceaccess 2026110301
+> or later. No real credentials are included. Remains beta.
 
 ## Capturas e preço
 

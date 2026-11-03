@@ -9,7 +9,7 @@ final class purge_devices extends \core\task\scheduled_task {
     public function execute(): void {
         global $DB;
         \local_lumen10_voiceaccess\operations::purge();
-        $DB->delete_records_select('local_l10va_device', 'expires <= :now OR (kind=:kind AND used=1)',
+        $DB->delete_records_select('local_lumen10_voiceaccess_device', 'expires <= :now OR (kind=:kind AND used=1)',
             ['now' => time(), 'kind' => 'pair']);
     }
 }

@@ -21,7 +21,7 @@ final class access {
         if ($userid <= 0 || $userid === (int)($CFG->siteguest ?? 0)) {
             return false;
         }
-        return $DB->record_exists_sql('SELECT a.id FROM {local_l10va_access} a JOIN {user} u ON u.id=a.userid
+        return $DB->record_exists_sql('SELECT a.id FROM {local_lumen10_voiceaccess_access} a JOIN {user} u ON u.id=a.userid
             WHERE a.userid=:userid AND a.active=1 AND u.deleted=0 AND u.suspended=0
             AND a.declaration IN (:blind,:mobility,:both)',
             ['userid' => $userid, 'blind' => 'blind', 'mobility' => 'severemobility', 'both' => 'both']);
@@ -55,13 +55,13 @@ final class access {
         if (!$confirmed || !in_array($declaration, self::DECLARATIONS, true) || isguestuser($user)) {
             throw new \moodle_exception('invaliddeclaration', preferences::COMPONENT);
         }
-        $record = $DB->get_record('local_l10va_access', ['userid' => $userid]);
+        $record = $DB->get_record('local_lumen10_voiceaccess_access', ['userid' => $userid]);
         $now = time();
         if ($record) {
-            $DB->update_record('local_l10va_access', (object)['id' => $record->id, 'declaration' => $declaration,
+            $DB->update_record('local_lumen10_voiceaccess_access', (object)['id' => $record->id, 'declaration' => $declaration,
                 'active' => 1, 'timemodified' => $now]);
         } else {
-            $DB->insert_record('local_l10va_access', (object)['userid' => $userid, 'declaration' => $declaration,
+            $DB->insert_record('local_lumen10_voiceaccess_access', (object)['userid' => $userid, 'declaration' => $declaration,
                 'active' => 1, 'timecreated' => $now, 'timemodified' => $now]);
         }
         \local_lumen10_voiceaccess\event\access_updated::create(['context' => \context_system::instance(),
@@ -77,10 +77,10 @@ final class access {
         $lock = self::user_lock($userid);
         try {
         $transaction = $DB->start_delegated_transaction();
-        $DB->set_field('local_l10va_access', 'active', 0, ['userid' => $userid]);
+        $DB->set_field('local_lumen10_voiceaccess_access', 'active', 0, ['userid' => $userid]);
         operations::revoke($userid);
-        $DB->set_field('local_l10va_access', 'timemodified', time(), ['userid' => $userid]);
-        $DB->delete_records('local_l10va_device', ['userid' => $userid]);
+        $DB->set_field('local_lumen10_voiceaccess_access', 'timemodified', time(), ['userid' => $userid]);
+        $DB->delete_records('local_lumen10_voiceaccess_device', ['userid' => $userid]);
         $transaction->allow_commit();
         \local_lumen10_voiceaccess\event\access_updated::create(['context' => \context_system::instance(),
             'relateduserid' => $userid, 'other' => ['action' => 'revoke']])->trigger();
@@ -95,12 +95,12 @@ final class access {
         require_capability('local/lumen10_voiceaccess:manage', \context_system::instance());
         $lock = self::user_lock($userid);
         try {
-            if (!$DB->record_exists('local_l10va_access', ['userid' => $userid])) {
+            if (!$DB->record_exists('local_lumen10_voiceaccess_access', ['userid' => $userid])) {
                 return false;
             }
             $transaction = $DB->start_delegated_transaction();
-            $DB->delete_records('local_l10va_device', ['userid' => $userid]);
-            $DB->delete_records('local_l10va_access', ['userid' => $userid]);
+            $DB->delete_records('local_lumen10_voiceaccess_device', ['userid' => $userid]);
+            $DB->delete_records('local_lumen10_voiceaccess_access', ['userid' => $userid]);
             operations::revoke($userid);
             $transaction->allow_commit();
             \local_lumen10_voiceaccess\event\access_updated::create([
@@ -118,7 +118,7 @@ final class access {
         require_capability('local/lumen10_voiceaccess:manage', \context_system::instance());
         $lock = self::user_lock($userid);
         try {
-        $DB->delete_records('local_l10va_device', ['userid' => $userid]);
+        $DB->delete_records('local_lumen10_voiceaccess_device', ['userid' => $userid]);
         \local_lumen10_voiceaccess\event\access_updated::create(['context' => \context_system::instance(),
             'relateduserid' => $userid, 'other' => ['action' => 'devices']])->trigger();
         } finally {
@@ -134,9 +134,9 @@ final class access {
         if (!self::approved($userid)) {
             throw new \moodle_exception('notapproved', preferences::COMPONENT);
         }
-        $DB->delete_records('local_l10va_device', ['userid' => $userid, 'kind' => 'pair']);
+        $DB->delete_records('local_lumen10_voiceaccess_device', ['userid' => $userid, 'kind' => 'pair']);
         $token = bin2hex(random_bytes(32));
-        $DB->insert_record('local_l10va_device', (object)['userid' => $userid, 'tokenhash' => hash('sha256', $token),
+        $DB->insert_record('local_lumen10_voiceaccess_device', (object)['userid' => $userid, 'tokenhash' => hash('sha256', $token),
             'kind' => 'pair', 'expires' => time() + HOURSECS, 'used' => 0, 'timecreated' => time()]);
         return $token;
         } finally {
@@ -159,19 +159,19 @@ final class access {
         $userlock = null;
         $transaction = null;
         try {
-            $record = $DB->get_record('local_l10va_device', ['tokenhash' => $hash, 'kind' => 'pair', 'used' => 0]);
+            $record = $DB->get_record('local_lumen10_voiceaccess_device', ['tokenhash' => $hash, 'kind' => 'pair', 'used' => 0]);
             if (!$record) {
                 throw new \moodle_exception('pairinvalid', preferences::COMPONENT);
             }
             $userlock = self::user_lock((int)$record->userid);
-            $record = $DB->get_record('local_l10va_device', ['tokenhash' => $hash, 'kind' => 'pair', 'used' => 0]);
+            $record = $DB->get_record('local_lumen10_voiceaccess_device', ['tokenhash' => $hash, 'kind' => 'pair', 'used' => 0]);
             if (!$record || (int)$record->expires <= time() || !self::allowed((int)$record->userid)) {
                 throw new \moodle_exception('pairinvalid', preferences::COMPONENT);
             }
             $transaction = $DB->start_delegated_transaction();
-            $DB->set_field('local_l10va_device', 'used', 1, ['id' => $record->id]);
+            $DB->set_field('local_lumen10_voiceaccess_device', 'used', 1, ['id' => $record->id]);
             $device = bin2hex(random_bytes(32));
-            $DB->insert_record('local_l10va_device', (object)['userid' => $record->userid,
+            $DB->insert_record('local_lumen10_voiceaccess_device', (object)['userid' => $record->userid,
                 'tokenhash' => hash('sha256', $device), 'kind' => 'device',
                 'expires' => time() + self::COOKIE_DAYS * DAYSECS, 'used' => 0, 'timecreated' => time()]);
             $transaction->allow_commit();
@@ -203,7 +203,7 @@ final class access {
         if (!is_string($token) || !preg_match('/^[a-f0-9]{64}$/D', $token)) {
             return 0;
         }
-        $record = $DB->get_record('local_l10va_device', ['tokenhash' => hash('sha256', $token), 'kind' => 'device', 'used' => 0]);
+        $record = $DB->get_record('local_lumen10_voiceaccess_device', ['tokenhash' => hash('sha256', $token), 'kind' => 'device', 'used' => 0]);
         return $record && (int)$record->expires > time() && self::allowed((int)$record->userid) ? (int)$record->userid : 0;
     }
 
@@ -248,12 +248,12 @@ final class access {
                 throw new \moodle_exception('notapproved', preferences::COMPONENT);
             }
             $hash = hash('sha256', 'l10va-phrase:' . $norm);
-            $existing = $DB->get_record('local_l10va_device', ['tokenhash' => $hash]);
+            $existing = $DB->get_record('local_lumen10_voiceaccess_device', ['tokenhash' => $hash]);
             if ($existing && (int)$existing->userid !== $userid) {
                 throw new \moodle_exception('invalidrequest');
             }
-            $DB->delete_records('local_l10va_device', ['userid' => $userid, 'kind' => 'phrase']);
-            $DB->insert_record('local_l10va_device', (object)[
+            $DB->delete_records('local_lumen10_voiceaccess_device', ['userid' => $userid, 'kind' => 'phrase']);
+            $DB->insert_record('local_lumen10_voiceaccess_device', (object)[
                 'userid' => $userid,
                 'tokenhash' => $hash,
                 'kind' => 'phrase',
@@ -269,7 +269,7 @@ final class access {
     public static function has_voice_phrase(int $userid): bool {
         global $DB;
         return $DB->record_exists_select(
-            'local_l10va_device',
+            'local_lumen10_voiceaccess_device',
             'userid = :userid AND kind = :kind AND used = 0 AND expires > :now',
             ['userid' => $userid, 'kind' => 'phrase', 'now' => time()]
         );
@@ -285,7 +285,7 @@ final class access {
             return 0;
         }
         $hash = hash('sha256', 'l10va-phrase:' . $norm);
-        $record = $DB->get_record('local_l10va_device', ['tokenhash' => $hash, 'kind' => 'phrase', 'used' => 0]);
+        $record = $DB->get_record('local_lumen10_voiceaccess_device', ['tokenhash' => $hash, 'kind' => 'phrase', 'used' => 0]);
         if (!$record || (int)$record->expires <= time() || !self::allowed((int)$record->userid)) {
             return 0;
         }
@@ -295,7 +295,7 @@ final class access {
     public static function issue_device_cookie(int $userid): string {
         global $DB;
         $device = bin2hex(random_bytes(32));
-        $DB->insert_record('local_l10va_device', (object)[
+        $DB->insert_record('local_lumen10_voiceaccess_device', (object)[
             'userid' => $userid,
             'tokenhash' => hash('sha256', $device),
             'kind' => 'device',
@@ -312,8 +312,8 @@ final class access {
         $lock = self::user_lock($userid);
         try {
             $transaction = $DB->start_delegated_transaction();
-            foreach (['local_l10va_user', 'local_l10va_access', 'local_l10va_device', 'local_l10va_aiusage',
-                    'local_l10va_live'] as $table) {
+            foreach (['local_lumen10_voiceaccess_user', 'local_lumen10_voiceaccess_access', 'local_lumen10_voiceaccess_device', 'local_lumen10_voiceaccess_aiusage',
+                    'local_lumen10_voiceaccess_live'] as $table) {
                 $DB->delete_records($table, ['userid' => $userid]);
             }
             $transaction->allow_commit();

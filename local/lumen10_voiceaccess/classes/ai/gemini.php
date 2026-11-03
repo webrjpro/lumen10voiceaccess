@@ -21,7 +21,7 @@ final class gemini {
     public const DEFAULT_LIVE_MODEL = 'gemini-3.8-live';
     public const DEFAULT_PROJECT_DAILY = 450;
     public const ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/';
-    public const TABLE = 'local_l10va_aiusage';
+    public const TABLE = 'local_lumen10_voiceaccess_aiusage';
 
     /** Server-side secret. Callers must never echo, log or serialise the returned value. */
     private static function api_key(): string {

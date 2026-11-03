@@ -132,7 +132,7 @@ final class gemini_test extends \advanced_testcase {
         $this->setUser($u);
         $this->assertSame(['intent' => 'UNKNOWN'], router::interpret($u->id, 'abrir meus cursos'));
         $this->assertSame(0, preferences::get($u->id)->quotaused);
-        $this->assertFalse($DB->record_exists('local_l10va_aiusage', ['userid' => $u->id]));
+        $this->assertFalse($DB->record_exists('local_lumen10_voiceaccess_aiusage', ['userid' => $u->id]));
         preferences::save($u->id, array_replace(preferences::defaults(), [
             'provider' => 'none', 'model' => gemini::DEFAULT_TEXT_MODEL, 'consent' => 1,
         ]));
@@ -157,7 +157,7 @@ final class gemini_test extends \advanced_testcase {
         $this->assertSame(['intent' => 'OPEN_COURSES'], $result);
 
         // Verify aggregated usage table.
-        $usage = $DB->get_record('local_l10va_aiusage', ['userid' => $u->id, 'provider' => gemini::PROVIDER]);
+        $usage = $DB->get_record('local_lumen10_voiceaccess_aiusage', ['userid' => $u->id, 'provider' => gemini::PROVIDER]);
         $this->assertNotEmpty($usage);
         $this->assertEquals(1, $usage->requests);
         $this->assertEquals(0, $usage->errors);
@@ -169,7 +169,7 @@ final class gemini_test extends \advanced_testcase {
 
         // Test project-wide daily cap.
         set_config('gemini_projectdaily', 1, preferences::COMPONENT);
-        $DB->set_field('local_l10va_user', 'lastrequest', time() - 4, ['userid' => $u->id]);
+        $DB->set_field('local_lumen10_voiceaccess_user', 'lastrequest', time() - 4, ['userid' => $u->id]);
         $this->expectException(\moodle_exception::class);
         router::interpret($u->id, 'ver notas');
     }
@@ -211,10 +211,10 @@ final class gemini_test extends \advanced_testcase {
         access::grant($u->id, 'blind', true);
 
         gemini::record_usage($u->id, gemini::DEFAULT_TEXT_MODEL, true, 50, 20);
-        $this->assertTrue($DB->record_exists('local_l10va_aiusage', ['userid' => $u->id]));
+        $this->assertTrue($DB->record_exists('local_lumen10_voiceaccess_aiusage', ['userid' => $u->id]));
 
         access::erase_user_data($u->id);
-        $this->assertFalse($DB->record_exists('local_l10va_aiusage', ['userid' => $u->id]));
+        $this->assertFalse($DB->record_exists('local_lumen10_voiceaccess_aiusage', ['userid' => $u->id]));
     }
 
     public function test_connection_test_respects_project_limit_without_counting_a_rejected_attempt(): void {

@@ -6,6 +6,21 @@ defined('MOODLE_INTERNAL') || die();
 
 /** Exercise the activity's persistence and course backup boundary with synthetic data. */
 final class lifecycle_test extends \advanced_testcase {
+    private function delete_activity(int $courseid, int $cmid): void {
+        if (method_exists(\core_courseformat\formatactions::class, 'cm')) {
+            \core_courseformat\formatactions::cm($courseid)->delete($cmid);
+        } else {
+            course_delete_module($cmid);
+        }
+    }
+
+    private function duplicate_activity(\stdClass $course, \stdClass $cm) {
+        if (method_exists(\core_courseformat\formatactions::class, 'cm')) {
+            return \core_courseformat\formatactions::cm($course->id)->duplicate($cm->id);
+        }
+        return duplicate_module($course, $cm);
+    }
+
     protected function setUp(): void {
         global $CFG;
         parent::setUp();
@@ -29,7 +44,7 @@ final class lifecycle_test extends \advanced_testcase {
             'instance' => $record->id, 'name' => 'Entrada revisada',
         ]));
         $this->assertSame('Entrada revisada', $DB->get_field('lumen10voiceaccess', 'name', ['id' => $record->id]));
-        course_delete_module($activity->cmid);
+        $this->delete_activity($course->id, $activity->cmid);
         $this->assertFalse($DB->record_exists('lumen10voiceaccess', ['id' => $record->id]));
         $this->assertFalse($DB->record_exists('course_modules', ['id' => $activity->cmid]));
         $this->assertFalse(lumen10voiceaccess_delete_instance($record->id));
@@ -50,11 +65,11 @@ final class lifecycle_test extends \advanced_testcase {
         \local_lumen10_voiceaccess\access::grant($user->id, 'blind', true);
         \local_lumen10_voiceaccess\access::issue_pair($user->id);
         $before = [];
-        foreach (['local_l10va_user', 'local_l10va_access', 'local_l10va_device'] as $table) {
+        foreach (['local_lumen10_voiceaccess_user', 'local_lumen10_voiceaccess_access', 'local_lumen10_voiceaccess_device'] as $table) {
             $before[$table] = $DB->get_records($table, [], 'id');
         }
         $cm = get_coursemodule_from_id('lumen10voiceaccess', $activity->cmid, 0, false, MUST_EXIST);
-        $copy = duplicate_module($course, $cm);
+        $copy = $this->duplicate_activity($course, $cm);
         $this->assertNotEquals($cm->instance, $copy->instance);
         $restored = $DB->get_record('lumen10voiceaccess', ['id' => $copy->instance], '*', MUST_EXIST);
         $this->assertStringContainsString('Guia acessível', $restored->name);
@@ -62,7 +77,7 @@ final class lifecycle_test extends \advanced_testcase {
         $copycontext = \context_module::instance($copy->id);
         $this->assertNotFalse(get_file_storage()->get_file($copycontext->id, 'mod_lumen10voiceaccess',
             'intro', 0, '/', 'guide.svg'));
-        course_delete_module($copy->id);
+        $this->delete_activity($course->id, $copy->id);
         foreach ($before as $table => $records) {
             $this->assertEquals($records, $DB->get_records($table, [], 'id'));
         }

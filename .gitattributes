@@ -1,0 +1,2 @@
+# Preserve the exact source bytes covered by the signed release manifest.
+* -text

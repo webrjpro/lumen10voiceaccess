@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="CLI Arguments" tests="3" assertions="17" errors="0" failures="0" skipped="0" time="4.664928">
+    <testsuite name="mod_lumen10voiceaccess\lifecycle_test" file="/var/www/html/public/mod/lumen10voiceaccess/tests/lifecycle_test.php" tests="3" assertions="17" errors="0" failures="0" skipped="0" time="4.664928">
+      <testcase name="test_create_update_and_delete_do_not_leave_an_activity_record" file="/var/www/html/public/mod/lumen10voiceaccess/tests/lifecycle_test.php" line="33" class="mod_lumen10voiceaccess\lifecycle_test" classname="mod_lumen10voiceaccess.lifecycle_test" assertions="7" time="1.737065"/>
+      <testcase name="test_backup_restore_preserves_intro_files_and_excludes_personal_data" file="/var/www/html/public/mod/lumen10voiceaccess/tests/lifecycle_test.php" line="53" class="mod_lumen10voiceaccess\lifecycle_test" classname="mod_lumen10voiceaccess.lifecycle_test" assertions="7" time="2.188400"/>
+      <testcase name="test_student_cannot_add_activities_and_view_permission_can_be_revoked" file="/var/www/html/public/mod/lumen10voiceaccess/tests/lifecycle_test.php" line="86" class="mod_lumen10voiceaccess\lifecycle_test" classname="mod_lumen10voiceaccess.lifecycle_test" assertions="3" time="0.739463"/>
+    </testsuite>
+  </testsuite>
+</testsuites>

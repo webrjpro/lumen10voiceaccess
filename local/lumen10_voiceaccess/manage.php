@@ -31,7 +31,7 @@ if ($action !== '') {
     }
     require_sesskey();
     if ($action === 'delete') {
-        if (!$DB->record_exists('local_l10va_access', ['userid' => $selected])) {
+        if (!$DB->record_exists('local_lumen10_voiceaccess_access', ['userid' => $selected])) {
             redirect($PAGE->url, get_string('approvalmissing', $c), null, \core\output\notification::NOTIFY_INFO);
         }
         if (!optional_param('confirm', false, PARAM_BOOL)) {
@@ -115,9 +115,9 @@ $form->display();
 echo $OUTPUT->heading(get_string('approvedlist', $c), 3);
 $table = new html_table();
 $table->head = [get_string('fullname'), get_string('declaration', $c), get_string('status'), get_string('actions')];
-$total = $DB->count_records('local_l10va_access');
+$total = $DB->count_records('local_lumen10_voiceaccess_access');
 $records = $DB->get_records_sql('SELECT a.*,u.firstname,u.lastname,u.firstnamephonetic,u.lastnamephonetic,
-    u.middlename,u.alternatename,u.deleted,u.suspended FROM {local_l10va_access} a JOIN {user} u ON u.id=a.userid
+    u.middlename,u.alternatename,u.deleted,u.suspended FROM {local_lumen10_voiceaccess_access} a JOIN {user} u ON u.id=a.userid
     ORDER BY a.active DESC,u.lastname,u.firstname,a.id', [], $page * 25, 25);
 foreach ($records as $row) {
     $actions = '';

@@ -1,9 +1,9 @@
-# Lumen10 Acesso Universal — 0.5.1-beta / 2026110300
+# Lumen10 Acesso Universal — 0.5.2-beta / 2026110301
 
 Pacote de distribuição preparado em 03/11/2026, baseado no código 0.5.0-beta
 conferido em produção. Compatibilidade declarada: Moodle 5.1 e 5.2. Consulte
 [INSTALLATION.md](INSTALLATION.md) para instalação com a chave de IA do próprio cliente.
-Esta revisão atualiza documentação e metadados, sem alterar a lógica da assistência.
+Esta revisão corrige os prefixos das cinco tabelas e inclui migração nativa para preservar os dados existentes.
 Em instalações novas, a IA permanece desligada e sem credenciais. O padrão institucional é Gemini
 3.8 Live para áudio e 3.5 Flash-Lite para interpretação; a instituição deve verificar
 acesso e cotas efetivas do próprio projeto. O aluno não precisa de chave pessoal Gemini.
@@ -71,7 +71,7 @@ e encerram se o servidor negar ou não responder em 4 segundos. Em condições n
 isso representa até aproximadamente 9 segundos para encerrar uma sessão aberta;
 não é revogação instantânea do token no Google. Ocultar a aba encerra a captura local.
 
-O registro operacional persistente em `local_l10va_live` guarda hash do identificador,
+O registro operacional persistente em `local_lumen10_voiceaccess_live` guarda hash do identificador,
 titular, validade, motivo e contadores limitados. Não guarda áudio, transcrições,
 conteúdo de páginas, URLs, IP, token de autorização ou chave. A retenção é de 30 dias,
 executada pela tarefa horária e dependente do cron. Reprodução, trilhas de captura e

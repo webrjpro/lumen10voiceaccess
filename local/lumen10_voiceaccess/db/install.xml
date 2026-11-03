@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2026 Carlos Antonio de Oliveira Piquet. SPDX-License-Identifier: GPL-3.0-or-later. -->
-<XMLDB PATH="local/lumen10_voiceaccess/db" VERSION="20261016" COMMENT="VoiceAccess personal settings; never audio or transcripts">
+<XMLDB PATH="local/lumen10_voiceaccess/db" VERSION="20261103" COMMENT="VoiceAccess personal settings; never audio or transcripts">
   <TABLES>
-    <TABLE NAME="local_l10va_user" COMMENT="Personal accessibility preferences and encrypted API credential">
+    <TABLE NAME="local_lumen10_voiceaccess_user" COMMENT="Personal accessibility preferences and encrypted API credential">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true"/>
@@ -22,7 +22,7 @@
       </KEYS>
       <INDEXES><INDEX NAME="useruniq" UNIQUE="true" FIELDS="userid"/></INDEXES>
     </TABLE>
-    <TABLE NAME="local_l10va_access" COMMENT="Restricted self-declaration and analyst approval; never medical documents">
+    <TABLE NAME="local_lumen10_voiceaccess_access" COMMENT="Restricted self-declaration and analyst approval; never medical documents">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true"/>
@@ -34,7 +34,7 @@
       <KEYS><KEY NAME="primary" TYPE="primary" FIELDS="id"/><KEY NAME="userfk" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/></KEYS>
       <INDEXES><INDEX NAME="useruniq" UNIQUE="true" FIELDS="userid"/></INDEXES>
     </TABLE>
-    <TABLE NAME="local_l10va_device" COMMENT="Hashed private single-use pairing and revocable device credentials">
+    <TABLE NAME="local_lumen10_voiceaccess_device" COMMENT="Hashed private single-use pairing and revocable device credentials">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true"/>
@@ -47,7 +47,7 @@
       <KEYS><KEY NAME="primary" TYPE="primary" FIELDS="id"/><KEY NAME="userfk" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/></KEYS>
       <INDEXES><INDEX NAME="tokenuniq" UNIQUE="true" FIELDS="tokenhash"/><INDEX NAME="expiryidx" UNIQUE="false" FIELDS="expires"/></INDEXES>
     </TABLE>
-    <TABLE NAME="local_l10va_aiusage" COMMENT="Aggregated daily AI consumption per person; never phrases, responses or audio">
+    <TABLE NAME="local_lumen10_voiceaccess_aiusage" COMMENT="Aggregated daily AI consumption per person; never phrases, responses or audio">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="day" TYPE="char" LENGTH="10" NOTNULL="true"/>
@@ -63,7 +63,7 @@
       <KEYS><KEY NAME="primary" TYPE="primary" FIELDS="id"/></KEYS>
       <INDEXES><INDEX NAME="dayuserprov" UNIQUE="true" FIELDS="day, userid, provider, model"/></INDEXES>
     </TABLE>
-    <TABLE NAME="local_l10va_live" COMMENT="Thirty day operational session ledger; no audio, transcripts, URLs or credentials">
+    <TABLE NAME="local_lumen10_voiceaccess_live" COMMENT="Thirty day operational session ledger; no audio, transcripts, URLs or credentials">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="sessionhash" TYPE="char" LENGTH="64" NOTNULL="true"/>

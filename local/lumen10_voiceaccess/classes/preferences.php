@@ -24,7 +24,7 @@ final class preferences {
 
     public static function get(int $userid): \stdClass {
         global $DB;
-        return $DB->get_record('local_l10va_user', ['userid' => $userid]) ?: (object)[
+        return $DB->get_record('local_lumen10_voiceaccess_user', ['userid' => $userid]) ?: (object)[
             'userid' => $userid, 'preferences' => json_encode(self::defaults()),
             'provider' => 'none', 'model' => self::DEFAULT_MODEL, 'apikey' => null,
             'consent' => 0, 'quotaused' => 0, 'quotaday' => '', 'lastrequest' => 0, 'timemodified' => 0,
@@ -106,10 +106,10 @@ final class preferences {
                 set_config('inst_apikey', \core\encryption::encrypt($rawkey), self::COMPONENT);
             }
         }
-        foreach ($DB->get_records('local_l10va_user') as $u) {
+        foreach ($DB->get_records('local_lumen10_voiceaccess_user') as $u) {
             $u->preferences = json_encode($prefs);
             $u->timemodified = time();
-            $DB->update_record('local_l10va_user', $u);
+            $DB->update_record('local_lumen10_voiceaccess_user', $u);
         }
     }
 
@@ -161,11 +161,11 @@ final class preferences {
         }
         $row->timemodified = time();
         if (empty($row->id)) {
-            $DB->insert_record('local_l10va_user', $row);
+            $DB->insert_record('local_lumen10_voiceaccess_user', $row);
         } else {
             // Do not overwrite quota columns from a stale form read.
             unset($row->quotaused, $row->quotaday, $row->lastrequest);
-            $DB->update_record('local_l10va_user', $row);
+            $DB->update_record('local_lumen10_voiceaccess_user', $row);
         }
     }
 }

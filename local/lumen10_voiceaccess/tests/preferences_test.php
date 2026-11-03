@@ -48,7 +48,7 @@ final class preferences_test extends \advanced_testcase {
         $this->resetAfterTest();
         $u = $this->getDataGenerator()->create_user();
         $this->save($u->id);
-        $DB->set_field('local_l10va_user', 'quotaused', 12, ['userid' => $u->id]);
+        $DB->set_field('local_lumen10_voiceaccess_user', 'quotaused', 12, ['userid' => $u->id]);
         $this->save($u->id, ['removekey' => 1, 'apikey' => '']);
         $this->assertEmpty(preferences::get($u->id)->apikey);
         $this->assertEquals(12, preferences::get($u->id)->quotaused);
@@ -89,7 +89,7 @@ final class preferences_test extends \advanced_testcase {
         ]]]]));
         $this->assertSame(['intent' => 'OPEN_GRADES'], router::interpret($u->id, 'mostra quanto tirei'));
         $this->assertEquals(1, preferences::get($u->id)->quotaused);
-        $DB->set_field('local_l10va_user', 'lastrequest', time() - 4, ['userid' => $u->id]);
+        $DB->set_field('local_lumen10_voiceaccess_user', 'lastrequest', time() - 4, ['userid' => $u->id]);
         $this->expectException(\moodle_exception::class);
         router::interpret($u->id, 'e agora?');
     }
@@ -114,7 +114,7 @@ final class preferences_test extends \advanced_testcase {
         set_config('allowai', 1, preferences::COMPONENT);
         set_config('dailyquota', 40, preferences::COMPONENT);
         foreach (['false', '{"output":"invalid"}', '{"output":[false,{"type":"message","content":false}]}'] as $response) {
-            $DB->set_field('local_l10va_user', 'lastrequest', time() - 4, ['userid' => $user->id]);
+            $DB->set_field('local_lumen10_voiceaccess_user', 'lastrequest', time() - 4, ['userid' => $user->id]);
             \curl::mock_response($response);
             try {
                 $this->assertSame(['intent' => 'UNKNOWN'], router::interpret($user->id, 'show grades'));
@@ -133,8 +133,8 @@ final class preferences_test extends \advanced_testcase {
         $b = $this->getDataGenerator()->create_user();
         $this->save($a->id); $this->save($b->id);
         privacy\provider::delete_data_for_all_users_in_context(\context_user::instance($a->id));
-        $this->assertFalse($DB->record_exists('local_l10va_user', ['userid' => $a->id]));
-        $this->assertTrue($DB->record_exists('local_l10va_user', ['userid' => $b->id]));
+        $this->assertFalse($DB->record_exists('local_lumen10_voiceaccess_user', ['userid' => $a->id]));
+        $this->assertTrue($DB->record_exists('local_lumen10_voiceaccess_user', ['userid' => $b->id]));
     }
     public function test_login_captcha_stays_enabled_without_a_private_device_and_preserves_signup(): void {
         global $CFG;

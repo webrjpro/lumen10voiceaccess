@@ -13,8 +13,8 @@ instalador de um único plugin Moodle.
 
 | Ordem | Componente | Instalador |
 | --- | --- | --- |
-| 1 | Plugin principal: `local_lumen10_voiceaccess` 0.5.1-beta | [Baixar ZIP](packages/local_lumen10_voiceaccess-0.5.1-beta.zip) |
-| 2, opcional | Atividade de curso: `mod_lumen10voiceaccess` 0.2.1-beta | [Baixar ZIP](packages/mod_lumen10voiceaccess-0.2.1-beta.zip) |
+| 1 | Plugin principal: `local_lumen10_voiceaccess` 0.5.2-beta | [Baixar ZIP](packages/local_lumen10_voiceaccess-0.5.2-beta.zip) |
+| 2, opcional | Atividade de curso: `mod_lumen10voiceaccess` 0.2.2-beta | [Baixar ZIP](packages/mod_lumen10voiceaccess-0.2.2-beta.zip) |
 
 O plugin local contém a assistência por voz, as preferências e a integração com IA.
 A atividade adiciona uma entrada em um curso e depende do plugin local. Instale
@@ -62,13 +62,16 @@ impede cópias, não é registro de autoria no INPI e não é certificado ICP-Br
 A distribuição GPL permite uso, estudo, modificação e redistribuição conforme seus
 termos. Não há bloqueio remoto, licença comercial oculta ou chave do autor embutida.
 
-## Validação desta preparação
+## Correction and validation
 
-Foram conferidos 59 arquivos PHP, 26 arquivos JavaScript e dez casos de configuração
-de chave com valores fictícios, sem chamadas reais aos provedores. O código de
-execução foi preservado em relação à base inspecionada em produção no Moodle 5.2.4+.
-Esta revisão altera documentação, versões, dependência e metadados de suporte.
+0.5.2-beta corrects the abbreviated database table prefixes rejected by
+moodle-plugin-ci. The five tables and their PHP references now use the full component
+prefix. Existing installations receive a native XMLDB rename migration that preserves
+IDs and records rather than reinstalling or copying personal data.
 
-Isso não é uma nova homologação ponta a ponta, teste de carga ou certificação WCAG.
-O produto permanece beta. Valide dispositivos, permissões e usuários reais antes
-de ampliar o uso institucional.
+The original 0.5.1-beta package reproduces the reported validation failure with the
+official moodle-plugin-ci tool. The corrected package passes that validation and PHP
+lint on PHP 8.3.36. Native Moodle tests cover the plugin and data-preserving migration;
+consult [the executed checks](packages/qa-results.json) for exact results and limits.
+Production was not upgraded. This remains beta, without a new real-provider,
+load, device or WCAG certification.

@@ -12,20 +12,20 @@ final class provider implements \core_privacy\local\metadata\provider,
                 'quotaused', 'quotaday', 'lastrequest', 'timemodified'] as $field) {
             $fields[$field] = 'privacy:metadata:' . $field;
         }
-        $collection->add_database_table('local_l10va_user', $fields, 'privacy:metadata');
-        $collection->add_database_table('local_l10va_access', [
+        $collection->add_database_table('local_lumen10_voiceaccess_user', $fields, 'privacy:metadata');
+        $collection->add_database_table('local_lumen10_voiceaccess_access', [
             'userid' => 'privacy:metadata:userid', 'declaration' => 'privacy:declaration',
             'active' => 'privacy:approval', 'timecreated' => 'privacy:metadata:timemodified',
             'timemodified' => 'privacy:metadata:timemodified'], 'privacy:access');
-        $collection->add_database_table('local_l10va_device', [
+        $collection->add_database_table('local_lumen10_voiceaccess_device', [
             'userid' => 'privacy:metadata:userid', 'tokenhash' => 'privacy:devicehash',
             'kind' => 'privacy:devicekind', 'expires' => 'privacy:deviceexpiry',
             'used' => 'privacy:deviceused', 'timecreated' => 'privacy:metadata:timemodified'], 'privacy:devices');
-        $collection->add_database_table('local_l10va_aiusage', [
+        $collection->add_database_table('local_lumen10_voiceaccess_aiusage', [
             'userid' => 'privacy:metadata:userid', 'day' => 'privacy:aiusage_day',
             'requests' => 'privacy:aiusage_requests', 'prompttokens' => 'privacy:aiusage_tokens',
             'outputtokens' => 'privacy:aiusage_tokens'], 'privacy:aiusage');
-        $collection->add_database_table('local_l10va_live', [
+        $collection->add_database_table('local_lumen10_voiceaccess_live', [
             'userid' => 'privacy:metadata:userid', 'sessionhash' => 'privacy:ops_hash',
             'usageid' => 'privacy:ops', 'timecreated' => 'privacy:metadata:timemodified',
             'expires' => 'privacy:metadata:timemodified', 'lastseen' => 'privacy:metadata:timemodified',
@@ -42,11 +42,11 @@ final class provider implements \core_privacy\local\metadata\provider,
     public static function get_contexts_for_userid(int $userid): contextlist {
         global $DB;
         $list = new contextlist();
-        if ($DB->record_exists('local_l10va_user', ['userid' => $userid]) ||
-                $DB->record_exists('local_l10va_access', ['userid' => $userid]) ||
-                $DB->record_exists('local_l10va_device', ['userid' => $userid]) ||
-                $DB->record_exists('local_l10va_aiusage', ['userid' => $userid]) ||
-                $DB->record_exists('local_l10va_live', ['userid' => $userid])) {
+        if ($DB->record_exists('local_lumen10_voiceaccess_user', ['userid' => $userid]) ||
+                $DB->record_exists('local_lumen10_voiceaccess_access', ['userid' => $userid]) ||
+                $DB->record_exists('local_lumen10_voiceaccess_device', ['userid' => $userid]) ||
+                $DB->record_exists('local_lumen10_voiceaccess_aiusage', ['userid' => $userid]) ||
+                $DB->record_exists('local_lumen10_voiceaccess_live', ['userid' => $userid])) {
             $list->add_user_context($userid);
         }
         return $list;
@@ -60,20 +60,20 @@ final class provider implements \core_privacy\local\metadata\provider,
                 $row->haskey = !empty($row->apikey);
                 unset($row->apikey, $row->id);
                 writer::with_context($context)->export_data(['VoiceAccess'], $row);
-                $approval = $DB->get_record('local_l10va_access', ['userid' => $userid]);
+                $approval = $DB->get_record('local_lumen10_voiceaccess_access', ['userid' => $userid]);
                 if ($approval) {
                     unset($approval->id);
                     writer::with_context($context)->export_data(['VoiceAccess', 'Approval'], $approval);
                 }
-                $devices = array_values($DB->get_records('local_l10va_device', ['userid' => $userid],
+                $devices = array_values($DB->get_records('local_lumen10_voiceaccess_device', ['userid' => $userid],
                     'id', 'id,kind,expires,used,timecreated'));
                 foreach ($devices as $device) { unset($device->id); }
                 writer::with_context($context)->export_data(['VoiceAccess', 'Devices'], (object)['devices' => $devices]);
-                $usage = array_values($DB->get_records('local_l10va_aiusage', ['userid' => $userid], 'day',
+                $usage = array_values($DB->get_records('local_lumen10_voiceaccess_aiusage', ['userid' => $userid], 'day',
                     'id,day,provider,model,requests,errors,prompttokens,outputtokens'));
                 foreach ($usage as $item) { unset($item->id); }
                 writer::with_context($context)->export_data(['VoiceAccess', 'AI usage'], (object)['usage' => $usage]);
-                $sessions = array_values($DB->get_records('local_l10va_live', ['userid' => $userid], 'timecreated',
+                $sessions = array_values($DB->get_records('local_lumen10_voiceaccess_live', ['userid' => $userid], 'timecreated',
                     'id,timecreated,expires,lastseen,ended,reason,connectms,firstaudioms,inputtokens,outputtokens,actions,actionerrors,rejected'));
                 foreach ($sessions as $item) {unset($item->id);}
                 writer::with_context($context)->export_data(['VoiceAccess', 'Operations'], (object)['sessions' => $sessions]);
@@ -97,9 +97,9 @@ final class provider implements \core_privacy\local\metadata\provider,
     public static function get_users_in_context(userlist $list) {
         $context = $list->get_context();
         if ($context->contextlevel === CONTEXT_USER) {
-            $list->add_from_sql('userid', 'SELECT userid FROM {local_l10va_user} WHERE userid = :userid',
+            $list->add_from_sql('userid', 'SELECT userid FROM {local_lumen10_voiceaccess_user} WHERE userid = :userid',
                 ['userid' => $context->instanceid]);
-            foreach (['local_l10va_access', 'local_l10va_device', 'local_l10va_aiusage', 'local_l10va_live'] as $table) {
+            foreach (['local_lumen10_voiceaccess_access', 'local_lumen10_voiceaccess_device', 'local_lumen10_voiceaccess_aiusage', 'local_lumen10_voiceaccess_live'] as $table) {
                 $list->add_from_sql('userid', 'SELECT userid FROM {' . $table . '} WHERE userid = :userid',
                     ['userid' => $context->instanceid]);
             }
