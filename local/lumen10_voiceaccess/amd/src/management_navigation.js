@@ -1,0 +1,25 @@
+// Copyright 2026 Carlos Antonio de Oliveira Piquet. SPDX-License-Identifier: GPL-3.0-or-later.
+define([], function() {
+    'use strict';
+    return {init: function(config) {
+        if (!document.body.classList.contains('lumen-modern-admin')) { return; }
+        const insert = function() {
+            const nav = document.querySelector('#lex-admin-drawer .lex-admin-categories');
+            if (!nav) { return false; }
+            if (document.getElementById('l10va-manage-menu')) { return true; }
+            const link = document.createElement('a');
+            link.id = 'l10va-manage-menu';
+            link.className = 'lex-admin-category l10va-manage-link';
+            link.href = config.url;
+            const icon = document.createElement('img');
+            icon.src = config.icon;icon.alt = '';icon.width = 22;icon.height = 22;
+            link.append(icon, document.createTextNode(config.title));
+            nav.append(link);
+            return true;
+        };
+        if (insert()) { return; }
+        const observer = new MutationObserver(function() { if (insert()) { observer.disconnect(); } });
+        observer.observe(document.body, {childList: true, subtree: true});
+        setTimeout(function() { observer.disconnect(); }, 20000);
+    }};
+});

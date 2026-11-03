@@ -1,0 +1,10 @@
+chave.md
+credenciais.md
+.env
+.env.*
+secrets/
+gemini.key
+*-private.pem
+.runtime/
+__pycache__/
+node_modules/

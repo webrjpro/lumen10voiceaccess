@@ -1,0 +1,22 @@
+{
+  "php_linted": 59,
+  "javascript_parsed": 26,
+  "syntax_failures": [],
+  "customer_key_checks": {
+    "passed": true,
+    "checks": [
+      "fresh installation has no Gemini key",
+      "fresh installation reports no key source",
+      "customer default private file is supported",
+      "file is reported as key source",
+      "private file key is masked",
+      "customer key file override works",
+      "customer private Moodle config works",
+      "customer environment takes precedence",
+      "multiline credential is rejected",
+      "removing synthetic keys restores unconfigured state"
+    ],
+    "real_provider_calls": 0
+  },
+  "runtime_logic_changed": false
+}

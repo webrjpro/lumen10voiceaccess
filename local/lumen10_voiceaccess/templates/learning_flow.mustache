@@ -1,0 +1,51 @@
+{{! Copyright 2026 Carlos Antonio de Oliveira Piquet. SPDX-License-Identifier: GPL-3.0-or-later. }}
+<div id="l10va-learning-content">
+    <h1>{{title}}</h1>
+    {{#panel}}
+        <p class="l10va-flow-guide">{{#str}}flowpriorities, local_lumen10_voiceaccess{{/str}}</p>
+        {{#deadlinewarning}}<p role="status">{{#str}}flowdeadlinewarning, local_lumen10_voiceaccess{{/str}} <a href="{{calendarurl}}">{{#str}}flowcalendar, local_lumen10_voiceaccess{{/str}}</a></p>{{/deadlinewarning}}
+        {{#first}}
+            <section class="l10va-flow-next" aria-labelledby="l10va-next-heading">
+                <h2 id="l10va-next-heading"><span aria-hidden="true">1. </span>{{#str}}flownext, local_lumen10_voiceaccess{{/str}}</h2>
+                <p>{{reason}}</p><p>{{coursename}}</p>
+                <a class="l10va-flow-primary" data-l10va-flow-item href="{{url}}">{{name}}</a>
+            </section>
+        {{/first}}
+        {{#hasfollowing}}
+            <section aria-labelledby="l10va-following-heading"><h2 id="l10va-following-heading">{{#str}}flowfollowing, local_lumen10_voiceaccess{{/str}}</h2>
+                <ol class="l10va-flow-list" start="2">{{#following}}<li><a data-l10va-flow-item href="{{url}}">{{name}}</a><p>{{reason}} · {{coursename}}</p></li>{{/following}}</ol>
+            </section>
+        {{/hasfollowing}}
+        {{#empty}}<p>{{#nocourses}}{{#str}}flownoenrolment, local_lumen10_voiceaccess{{/str}}{{/nocourses}}{{^nocourses}}{{#str}}flownopending, local_lumen10_voiceaccess{{/str}}{{/nocourses}}</p>{{/empty}}
+        <p><a class="l10va-flow-secondary" data-l10va-flow-item href="{{coursesurl}}">{{#str}}flowcourses, local_lumen10_voiceaccess{{/str}}</a></p>
+    {{/panel}}
+    {{#coursesview}}
+        <p class="l10va-flow-guide">{{#str}}flowchoosecourse, local_lumen10_voiceaccess{{/str}}</p>
+        <ol class="l10va-flow-list">{{#items}}<li><a data-l10va-flow-item href="{{url}}">{{name}}</a></li>{{/items}}</ol>
+        {{#empty}}<p>{{#str}}flownoenrolment, local_lumen10_voiceaccess{{/str}}</p>{{/empty}}
+    {{/coursesview}}
+    {{#courseview}}
+        <p class="l10va-flow-guide">{{#str}}flowteacherorder, local_lumen10_voiceaccess{{/str}}</p>
+        <ol class="l10va-flow-list">{{#items}}<li><p>{{sectionname}} · {{kind}}{{#complete}} · {{#str}}flowcomplete, local_lumen10_voiceaccess{{/str}}{{/complete}}</p><a data-l10va-flow-item href="{{url}}">{{name}}</a></li>{{/items}}</ol>
+        {{#empty}}<p>{{#str}}flownoactivities, local_lumen10_voiceaccess{{/str}}</p>{{/empty}}
+    {{/courseview}}
+    {{#helpview}}
+        <p>{{#str}}flowhelptext, local_lumen10_voiceaccess{{/str}}</p>
+        <ul><li>{{#str}}flowhelpnavigate, local_lumen10_voiceaccess{{/str}}</li><li>{{#str}}flowhelpread, local_lumen10_voiceaccess{{/str}}</li><li>{{#str}}flowhelpmedia, local_lumen10_voiceaccess{{/str}}</li></ul>
+        <p><a data-l10va-flow-item href="{{messagesurl}}">{{#str}}flowcontact, local_lumen10_voiceaccess{{/str}}</a></p>
+        <p><a data-l10va-flow-item href="{{settingsurl}}">{{#str}}flowsettings, local_lumen10_voiceaccess{{/str}}</a></p>
+    {{/helpview}}
+    {{#previouspage}}<p><a data-l10va-flow-item href="{{previouspage}}">{{#str}}flowpreviouspage, local_lumen10_voiceaccess{{/str}}</a></p>{{/previouspage}}
+    {{#nextpage}}<p><a data-l10va-flow-item href="{{nextpage}}">{{#str}}flownextpage, local_lumen10_voiceaccess{{/str}}</a></p>{{/nextpage}}
+    <div class="l10va-flow-tools">
+        <div class="l10va-flow-assist-controls">
+            <button type="button" data-l10va-command="READ_PAGE">{{#str}}flowreadscreen, local_lumen10_voiceaccess{{/str}}</button>
+            <button type="button" data-l10va-command="STOP">{{#str}}flowstopread, local_lumen10_voiceaccess{{/str}}</button>
+            <button type="button" id="l10va-flow-microphone">{{#str}}flowmicrophone, local_lumen10_voiceaccess{{/str}}</button>
+        </div>
+        {{^helpview}}<a href="{{helpurl}}">{{#str}}flowhelp, local_lumen10_voiceaccess{{/str}}</a>{{/helpview}}
+        <details><summary>{{#str}}flowother, local_lumen10_voiceaccess{{/str}}</summary>
+            <ul><li><a href="{{gradesurl}}">{{#str}}flowgrades, local_lumen10_voiceaccess{{/str}}</a></li><li><a href="{{calendarurl}}">{{#str}}flowcalendar, local_lumen10_voiceaccess{{/str}}</a></li><li><a href="{{messagesurl}}">{{#str}}flowmessages, local_lumen10_voiceaccess{{/str}}</a></li>{{#libraryurl}}<li><a href="{{libraryurl}}">{{#str}}flowlibrary, local_lumen10_voiceaccess{{/str}}</a></li>{{/libraryurl}}<li><a href="{{settingsurl}}">{{#str}}flowsettings, local_lumen10_voiceaccess{{/str}}</a></li><li><a href="{{logouturl}}">{{#str}}logout{{/str}}</a></li></ul>
+        </details>
+    </div>
+</div>

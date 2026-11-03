@@ -1,0 +1,6 @@
+{
+  "algorithm": "Ed25519",
+  "signed_file": "manifest.json",
+  "signature_base64": "pZZF2fkVfbmmxLoKl+Jn8Nt/V0oJJQwnKMZRHLvxUwHwSIOh12/ixng0VK5lOfyAHHh+xLm9hHJXcfZraz8KCw==",
+  "public_key_sha256": "37b84fca1c7ed16c9cb8c1524bea40cffebb626770ad4d58f5bead5b80719677"
+}
