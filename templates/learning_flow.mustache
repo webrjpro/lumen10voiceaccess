@@ -1,0 +1,59 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+    Moodle is free software under GNU GPL version 3 or later.
+    Distributed WITHOUT ANY WARRANTY. See http://www.gnu.org/licenses/.
+
+    @template mod_lumen10voiceaccess/learning_flow
+    @copyright 2026 Carlos Antonio de Oliveira Piquet
+    @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+<div id="l10va-learning-content">
+    <h1>{{title}}</h1>
+    {{#panel}}
+        <p class="l10va-flow-guide">{{#str}}flowpriorities, mod_lumen10voiceaccess{{/str}}</p>
+        {{#deadlinewarning}}<p role="status">{{#str}}flowdeadlinewarning, mod_lumen10voiceaccess{{/str}} <a href="{{calendarurl}}">{{#str}}flowcalendar, mod_lumen10voiceaccess{{/str}}</a></p>{{/deadlinewarning}}
+        {{#first}}
+            <section class="l10va-flow-next" aria-labelledby="l10va-next-heading">
+                <h2 id="l10va-next-heading"><span aria-hidden="true">1. </span>{{#str}}flownext, mod_lumen10voiceaccess{{/str}}</h2>
+                <p>{{reason}}</p><p>{{coursename}}</p>
+                <a class="l10va-flow-primary" data-l10va-flow-item href="{{url}}">{{name}}</a>
+            </section>
+        {{/first}}
+        {{#hasfollowing}}
+            <section aria-labelledby="l10va-following-heading"><h2 id="l10va-following-heading">{{#str}}flowfollowing, mod_lumen10voiceaccess{{/str}}</h2>
+                <ol class="l10va-flow-list" start="2">{{#following}}<li><a data-l10va-flow-item href="{{url}}">{{name}}</a><p>{{reason}} · {{coursename}}</p></li>{{/following}}</ol>
+            </section>
+        {{/hasfollowing}}
+        {{#empty}}<p>{{#nocourses}}{{#str}}flownoenrolment, mod_lumen10voiceaccess{{/str}}{{/nocourses}}{{^nocourses}}{{#str}}flownopending, mod_lumen10voiceaccess{{/str}}{{/nocourses}}</p>{{/empty}}
+        <p><a class="l10va-flow-secondary" data-l10va-flow-item href="{{coursesurl}}">{{#str}}flowcourses, mod_lumen10voiceaccess{{/str}}</a></p>
+    {{/panel}}
+    {{#coursesview}}
+        <p class="l10va-flow-guide">{{#str}}flowchoosecourse, mod_lumen10voiceaccess{{/str}}</p>
+        <ol class="l10va-flow-list">{{#items}}<li><a data-l10va-flow-item href="{{url}}">{{name}}</a></li>{{/items}}</ol>
+        {{#empty}}<p>{{#str}}flownoenrolment, mod_lumen10voiceaccess{{/str}}</p>{{/empty}}
+    {{/coursesview}}
+    {{#courseview}}
+        <p class="l10va-flow-guide">{{#str}}flowteacherorder, mod_lumen10voiceaccess{{/str}}</p>
+        <ol class="l10va-flow-list">{{#items}}<li><p>{{sectionname}} · {{kind}}{{#complete}} · {{#str}}flowcomplete, mod_lumen10voiceaccess{{/str}}{{/complete}}</p><a data-l10va-flow-item href="{{url}}">{{name}}</a></li>{{/items}}</ol>
+        {{#empty}}<p>{{#str}}flownoactivities, mod_lumen10voiceaccess{{/str}}</p>{{/empty}}
+    {{/courseview}}
+    {{#helpview}}
+        <p>{{#str}}flowhelptext, mod_lumen10voiceaccess{{/str}}</p>
+        <ul><li>{{#str}}flowhelpnavigate, mod_lumen10voiceaccess{{/str}}</li><li>{{#str}}flowhelpread, mod_lumen10voiceaccess{{/str}}</li><li>{{#str}}flowhelpmedia, mod_lumen10voiceaccess{{/str}}</li></ul>
+        <p><a data-l10va-flow-item href="{{messagesurl}}">{{#str}}flowcontact, mod_lumen10voiceaccess{{/str}}</a></p>
+        <p><a data-l10va-flow-item href="{{settingsurl}}">{{#str}}flowsettings, mod_lumen10voiceaccess{{/str}}</a></p>
+    {{/helpview}}
+    {{#previouspage}}<p><a data-l10va-flow-item href="{{previouspage}}">{{#str}}flowpreviouspage, mod_lumen10voiceaccess{{/str}}</a></p>{{/previouspage}}
+    {{#nextpage}}<p><a data-l10va-flow-item href="{{nextpage}}">{{#str}}flownextpage, mod_lumen10voiceaccess{{/str}}</a></p>{{/nextpage}}
+    <div class="l10va-flow-tools">
+        <div class="l10va-flow-assist-controls">
+            <button type="button" data-l10va-command="READ_PAGE">{{#str}}flowreadscreen, mod_lumen10voiceaccess{{/str}}</button>
+            <button type="button" data-l10va-command="STOP">{{#str}}flowstopread, mod_lumen10voiceaccess{{/str}}</button>
+            <button type="button" id="l10va-flow-microphone">{{#str}}flowmicrophone, mod_lumen10voiceaccess{{/str}}</button>
+        </div>
+        {{^helpview}}<a href="{{helpurl}}">{{#str}}flowhelp, mod_lumen10voiceaccess{{/str}}</a>{{/helpview}}
+        <details><summary>{{#str}}flowother, mod_lumen10voiceaccess{{/str}}</summary>
+            <ul><li><a href="{{gradesurl}}">{{#str}}flowgrades, mod_lumen10voiceaccess{{/str}}</a></li><li><a href="{{calendarurl}}">{{#str}}flowcalendar, mod_lumen10voiceaccess{{/str}}</a></li><li><a href="{{messagesurl}}">{{#str}}flowmessages, mod_lumen10voiceaccess{{/str}}</a></li>{{#libraryurl}}<li><a href="{{libraryurl}}">{{#str}}flowlibrary, mod_lumen10voiceaccess{{/str}}</a></li>{{/libraryurl}}<li><a href="{{settingsurl}}">{{#str}}flowsettings, mod_lumen10voiceaccess{{/str}}</a></li><li><a href="{{logouturl}}">{{#str}}logout{{/str}}</a></li></ul>
+        </details>
+    </div>
+</div>

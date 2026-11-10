@@ -1,0 +1,64 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+    Moodle is free software under GNU GPL version 3 or later.
+    Distributed WITHOUT ANY WARRANTY. See http://www.gnu.org/licenses/.
+
+    @template mod_lumen10voiceaccess/overlay
+    @copyright 2026 Carlos Antonio de Oliveira Piquet
+    @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+<div id="l10va" class="l10va">
+    <button type="button" class="l10va-launch" data-va="toggle" aria-expanded="false" aria-controls="l10va-panel" disabled aria-busy="true"
+        aria-label="{{#str}}open, mod_lumen10voiceaccess{{/str}}"><svg class="l10va-launch-icon" aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M6 10v1a6 6 0 0 0 12 0v-1M12 17v5m-3 0h6M2 8v6m20-6v6"/></g></svg><span>VoiceAccess</span></button>
+    <section id="l10va-panel" class="l10va-panel" hidden aria-labelledby="l10va-title">
+        <div class="l10va-top"><h2 id="l10va-title">Lumen10 VoiceAccess</h2>
+        <button type="button" data-va="close" aria-label="{{#str}}close, mod_lumen10voiceaccess{{/str}}">×</button></div>
+        <p id="l10va-status" role="status" aria-live="polite" aria-atomic="true">{{#str}}stopped, mod_lumen10voiceaccess{{/str}}</p>
+        <p data-va="health" class="l10va-note" role="status"></p>
+        <button type="button" class="l10va-primary" data-va="mic" aria-pressed="false">{{#str}}start, mod_lumen10voiceaccess{{/str}}</button>
+        <p class="l10va-note">{{#str}}micdisclosure, mod_lumen10voiceaccess{{/str}}</p>
+        <section data-va="live-panel" hidden aria-labelledby="l10va-live-title">
+            <h3 id="l10va-live-title">{{#str}}liveheading, mod_lumen10voiceaccess{{/str}}</h3>
+            <p class="l10va-note">{{#str}}livedisclosure, mod_lumen10voiceaccess{{/str}}</p>
+            <button type="button" data-va="live" aria-pressed="false">{{#str}}livestart, mod_lumen10voiceaccess{{/str}}</button>
+            <p data-va="live-status" role="status" aria-live="polite"></p>
+            <label for="l10va-live-voice">{{#str}}livevoice, mod_lumen10voiceaccess{{/str}}</label>
+            <select id="l10va-live-voice" data-va="live-voice"></select>
+            <label for="l10va-live-volume">{{#str}}volume, mod_lumen10voiceaccess{{/str}}</label>
+            <input id="l10va-live-volume" data-va="live-volume" type="range" min="0" max="1" step="0.1" value="1">
+            <label for="l10va-live-rate">{{#str}}rate, mod_lumen10voiceaccess{{/str}}</label>
+            <select id="l10va-live-rate" data-va="live-rate"><option value="0.75">0.75×</option>
+                <option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select>
+        </section>
+        <label for="l10va-recognition">{{#str}}recognitionmode, mod_lumen10voiceaccess{{/str}}</label>
+        <select id="l10va-recognition" data-va="recognition">
+            <option value="browser">{{#str}}recognitionbrowser, mod_lumen10voiceaccess{{/str}}</option>
+            <option value="device">{{#str}}recognitiondevice, mod_lumen10voiceaccess{{/str}}</option>
+        </select>
+        <label><input type="checkbox" data-va="resume"> {{#str}}resume, mod_lumen10voiceaccess{{/str}}</label>
+        <label for="l10va-voice">{{#str}}voice, mod_lumen10voiceaccess{{/str}}</label>
+        <select id="l10va-voice" data-va="voice"><option value="">{{#str}}voiceauto, mod_lumen10voiceaccess{{/str}}</option></select>
+        <button type="button" data-va="voicetest">{{#str}}voicetest, mod_lumen10voiceaccess{{/str}}</button>
+        <form data-va="form">
+            <label for="l10va-command">{{#str}}typed, mod_lumen10voiceaccess{{/str}}</label>
+            <div class="l10va-entry"><input id="l10va-command" type="text" maxlength="300" autocomplete="off">
+            <button type="submit">{{#str}}run, mod_lumen10voiceaccess{{/str}}</button></div>
+        </form>
+        <div class="l10va-actions">
+            <button type="button" data-va-command="READ_PAGE">{{#str}}read, mod_lumen10voiceaccess{{/str}}</button>
+            <button type="button" data-va-command="STOP">{{#str}}flowstopread, mod_lumen10voiceaccess{{/str}}</button>
+            <button type="button" data-va-command="READ_HEADINGS">{{#str}}headings, mod_lumen10voiceaccess{{/str}}</button>
+            <button type="button" data-va-command="WHERE_AM_I">{{#str}}where, mod_lumen10voiceaccess{{/str}}</button>
+            <button type="button" data-va="scan">{{#str}}scan, mod_lumen10voiceaccess{{/str}}</button>
+            <button type="button" data-va-command="HELP">{{#str}}help, mod_lumen10voiceaccess{{/str}}</button>
+        </div>
+        <div data-va="confirmation" class="l10va-confirm" hidden>
+            <button type="button" data-va-command="CONFIRM">{{#str}}confirmbutton, mod_lumen10voiceaccess{{/str}}</button>
+            <button type="button" data-va-command="CANCEL">{{#str}}cancelbutton, mod_lumen10voiceaccess{{/str}}</button>
+        </div>
+        <div data-va="output" class="l10va-output" tabindex="0"></div>
+        <a href="{{settingsurl}}">{{#str}}settings, mod_lumen10voiceaccess{{/str}}</a>
+    </section>
+    <noscript><a href="{{settingsurl}}">{{#str}}settings, mod_lumen10voiceaccess{{/str}}</a></noscript>
+</div>
+

@@ -1,7 +1,0 @@
- RUN  PHP Lint on local_lumen10_voiceaccess
-PHP 8.3.36 | 10 parallel jobs
-.............................................                45/45 (100%)
-
-
-Checked 45 files in 0.5 seconds
-No syntax error found

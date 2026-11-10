@@ -8,3 +8,13 @@ gemini.key
 .runtime/
 __pycache__/
 node_modules/
+
+adimissao.md
+
+admissao.md
+
+prova.md
+
+*.sql
+
+*.sql.gz

@@ -1,0 +1,29 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+    Moodle is free software under GNU GPL version 3 or later.
+    Distributed WITHOUT ANY WARRANTY. See http://www.gnu.org/licenses/.
+
+    @template mod_lumen10voiceaccess/readiness
+    @copyright 2026 Carlos Antonio de Oliveira Piquet
+    @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+<section class="l10va-readiness" aria-labelledby="l10va-readiness-title">
+    <div class="l10va-readiness-heading">
+        <div><h2 id="l10va-readiness-title">{{#str}}readinesstitle, mod_lumen10voiceaccess{{/str}}</h2>
+        <p>{{#str}}readinessintro, mod_lumen10voiceaccess{{/str}}</p></div>
+        <button type="button" class="btn btn-secondary" id="l10va-device-check">{{#str}}checkdevice, mod_lumen10voiceaccess{{/str}}</button>
+    </div>
+    <div class="l10va-readiness-grid">
+        <article><h3>{{#str}}deviceheading, mod_lumen10voiceaccess{{/str}}</h3>
+            <ul id="l10va-device-results" aria-live="polite" aria-atomic="true">
+                <li>{{#str}}deviceunchecked, mod_lumen10voiceaccess{{/str}}</li>
+            </ul>
+        </article>
+        <article><h3>{{#str}}aiheading, mod_lumen10voiceaccess{{/str}}</h3>
+            <p class="l10va-readiness-state">{{aistatus}}</p>
+            <p>{{#str}}aistatusnote, mod_lumen10voiceaccess{{/str}}</p>
+            <a href="#id_ai">{{#str}}reviewai, mod_lumen10voiceaccess{{/str}}</a>
+        </article>
+    </div>
+    <p class="l10va-readiness-footnote">{{#str}}diagnosticprivacy, mod_lumen10voiceaccess{{/str}}</p>
+</section>

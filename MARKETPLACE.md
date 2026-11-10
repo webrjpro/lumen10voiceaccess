@@ -1,95 +1,25 @@
-# Cadastro dos dois componentes no Moodle Marketplace
+# VoiceAccess unificado — 1.0.0-beta
 
-Cadastre cada componente usando seu ZIP de `packages/`, nunca o ZIP geral deste
-repositório. Para revisão, os avaliadores precisam conseguir acessar os fontes e
-o rastreador de problemas. O envio ao GitHub não altera a visibilidade do repositório.
+Envie **somente `mod_lumen10voiceaccess-1.0.0-beta.zip`**. É um único componente Moodle: **mod_lumen10voiceaccess**. Não há plugin auxiliar obrigatório. O antigo local_lumen10_voiceaccess foi incorporado; não envie seus ZIPs anteriores.
 
-## 1. Plugin principal
+O assistente funciona globalmente por hooks nativos, mesmo sem uma atividade de curso criada. Uma atividade pode ser adicionada como entrada opcional.
 
-| Campo | Valor |
-| --- | --- |
-| ZIP | `local_lumen10_voiceaccess-0.5.2-beta.zip` |
-| Tipo | Local plugin / Plugin local |
-| Componente | `local_lumen10_voiceaccess` |
-| Nome | Lumen10 Acesso Universal |
-| Versão numérica | `2026110301` |
-| Lançamento | `0.5.2-beta` |
-| Maturidade | Beta |
-| Moodle | 5.1 e 5.2 |
-| Repositório Git | `https://github.com/webrjpro/lumen10voiceaccess` |
-| Ramificação | `main` |
-| Tag | `v0.5.2-beta` |
-| Problemas | `https://github.com/webrjpro/lumen10voiceaccess/issues` |
-| Documentação | `https://github.com/webrjpro/lumen10voiceaccess/blob/main/local/lumen10_voiceaccess/INSTALLATION.md` |
+## Campos do Marketplace
 
-Descrição em inglês:
+- Plugin type: Activities.
+- Frankenstyle component: mod_lumen10voiceaccess.
+- Version build number: 2026111001.
+- Version release name: 1.0.0-beta.
+- Maturity: Beta.
+- Moodle versions: 5.1 e 5.2.
+- Repository URL: https://github.com/webrjpro/lumen10voiceaccess.git
+- Branch: main.
+- Tag: v1.0.0-beta.
+- Issue tracker: https://github.com/webrjpro/lumen10voiceaccess/issues
+- Name: Lumen10 VoiceAccess.
 
-> Lumen10 Acesso Universal provides optional voice and keyboard accessibility assistance
-> for Moodle 5.1 and 5.2. It includes personal accessibility preferences, user approval,
-> page reading, navigation assistance and a simplified learning interface.
->
-> Optional institutional Google Gemini Live conversation uses the institution's own API
-> key, kept server-side. New installations contain no production credentials and have AI
-> disabled by default. Administrators configure their own provider access, models,
-> audiences, quotas and participant consent. Provider usage charges are not included.
->
-> An alternative personal OpenAI or Anthropic integration can interpret navigation
-> commands when allowed by the institution. External processing may include microphone
-> audio, command text and limited navigation or requested page-reading context, depending
-> on the enabled feature. Browser speech services may also use external processing.
->
-> The companion mod_lumen10voiceaccess activity is optional and provides a course entry
-> point. Install this local plugin first. This is a beta release and does not claim
-> universal device support or complete accessibility compliance. GNU GPL v3 or later.
+Use DESCRICAO-MARKETPLACE.txt, RELEASE-NOTES.txt e as imagens reais em capturas. Não compacte a pasta inteira e não envie os manifestos de integridade como plugins. O ZIP geral de código-fonte do GitHub não é este instalador específico.
 
-Notas de lançamento:
+Há relatório de validação e comprovante de GitHub/produção nesta pasta. A migração preserva dados e atualiza a atividade no próprio lugar; não desinstale a atividade para atualizar. Consulte o guia de migração incluído no plugin para outras instalações.
 
-> Fixes the moodle-plugin-ci table-prefix validation failure. All five database tables
-> and their PHP references now use the full component prefix. Native Moodle upgrade
-> renames existing tables while preserving IDs, preferences, encrypted personal keys,
-> approvals, devices and usage records. No real credentials are included. Remains beta.
-
-## 2. Atividade opcional
-
-| Campo | Valor |
-| --- | --- |
-| ZIP | `mod_lumen10voiceaccess-0.2.2-beta.zip` |
-| Tipo | Activity module / Módulo de atividade |
-| Componente | `mod_lumen10voiceaccess` |
-| Nome | Lumen10 Acesso Universal - Course activity |
-| Versão numérica | `2026110301` |
-| Lançamento | `0.2.2-beta` |
-| Maturidade | Beta |
-| Moodle | 5.1 e 5.2 |
-| Repositório Git | `https://github.com/webrjpro/lumen10voiceaccess` |
-| Ramificação | `main` |
-| Tag | `mod-v0.2.2-beta` |
-| Problemas | `https://github.com/webrjpro/lumen10voiceaccess/issues` |
-| Dependência | `local_lumen10_voiceaccess` versão `2026110301` ou superior |
-
-Descrição em inglês:
-
-> Optional course activity providing instructions and a link to the site-wide Lumen10
-> VoiceAccess preferences. Requires local_lumen10_voiceaccess version 2026110301 or later,
-> installed separately. The voice assistant and AI integrations are supplied by that
-> companion local plugin, not by this activity alone.
->
-> Supports Moodle 5.1 and 5.2, native view-based completion and backup/restore of the
-> activity and its introduction files. Personal settings, AI keys and audio are not
-> included in course backups. Optional AI uses the customer's own credentials and may
-> incur separate provider charges. Beta release; GNU GPL v3 or later.
-
-Notas de lançamento:
-
-> Updates the companion dependency and lifecycle tests for the corrected database
-> schema and adds the required course activity index. Lifecycle tests use the native
-> Moodle 5.2 actions API when available. Requires local_lumen10_voiceaccess 2026110301
-> or later. No real credentials are included. Remains beta.
-
-## Capturas e preço
-
-Use capturas com dados fictícios: painel de preferências, interface do assistente,
-percurso simplificado e gestão de autorização sem nomes reais. Nunca mostre chaves,
-tokens ou dados de alunos. A sugestão comercial é oferecer a beta gratuitamente e
-contratar instalação, treinamento e suporte separadamente; a escolha final do preço
-pertence ao responsável pela publicação.
+A distribuição permanece beta por depender de validação com pessoas e dispositivos reais. Testes automatizados não significam aprovação do Marketplace. A assinatura técnica em nome de Carlos Antonio de Oliveira Piquet não é registro oficial no INPI.

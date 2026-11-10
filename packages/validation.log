@@ -1,6 +1,0 @@
- RUN  Validating local_lumen10_voiceaccess
-> Found required file: version.php
-> Found required file: lang/en/local_lumen10_voiceaccess.php
-> In db/upgrade.php, found function xmldb_local_lumen10_voiceaccess_upgrade
-> In lang/en/local_lumen10_voiceaccess.php, found language pluginname
-> In db/install.xml, found table prefixes local_lumen10_voiceaccess

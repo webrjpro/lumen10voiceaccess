@@ -1,0 +1,13 @@
+[
+  {
+    "component": "mod_lumen10voiceaccess",
+    "release": "1.0.0-beta",
+    "version": 2026111001,
+    "file": "mod_lumen10voiceaccess-1.0.0-beta.zip",
+    "sha256": "c83d822199245a8cd8adc53db920b1905137f7931c00a4675ccfa5cc0b176a4b",
+    "bytes": 3970716,
+    "files": 130,
+    "required_auxiliary_plugins": [],
+    "retired_component": "local_lumen10_voiceaccess"
+  }
+]
